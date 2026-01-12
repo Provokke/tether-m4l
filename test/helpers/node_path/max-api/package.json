@@ -1,0 +1,6 @@
+{
+  "name": "max-api",
+  "private": true,
+  "main": "index.js",
+  "type": "commonjs"
+}
