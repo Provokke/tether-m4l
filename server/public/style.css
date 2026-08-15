@@ -1,0 +1,110 @@
+:root {
+  --bg: #121316;
+  --panel: #1b1d22;
+  --panel-2: #23262d;
+  --line: #2e323a;
+  --text: #e6e7ea;
+  --muted: #8b909a;
+  --accent: #ffb000;
+  --ok: #3ddc84;
+  --warn: #ffb000;
+  --bad: #ff5b5b;
+  --radius: 10px;
+  color-scheme: dark;
+  font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; }
+code { font-family: ui-monospace, "SF Mono", Consolas, monospace; background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+[hidden] { display: none !important; }
+
+.bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 650; letter-spacing: .02em; margin-right: auto; }
+.brand svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2; }
+select { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+
+.pill { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid currentColor; text-transform: lowercase; }
+.pill[data-state="online"] { color: var(--ok); }
+.pill[data-state="connecting"] { color: var(--warn); }
+.pill[data-state="offline"] { color: var(--bad); }
+
+.empty { max-width: 560px; margin: 12vh auto; padding: 0 20px; text-align: center; color: var(--muted); }
+.empty h1 { color: var(--text); font-weight: 600; }
+.empty form { margin-top: 24px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.empty input { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 6px; padding: 7px 10px; margin-left: 6px; }
+
+.grid {
+  display: grid; gap: 16px; padding: 20px; max-width: 1200px; margin: 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 720px) {
+  .grid { grid-template-columns: minmax(0, 1fr); padding: 12px; }
+  .position { font-size: 32px; }
+}
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
+.card h2 { margin: 0 0 12px; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.card h2 small { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.clips, .log { grid-column: 1 / -1; }
+
+.row { display: flex; align-items: center; gap: 8px; }
+.btn {
+  display: inline-grid; place-items: center; min-width: 40px; height: 40px; padding: 0 10px;
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 18px;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn svg { width: 18px; height: 18px; fill: currentColor; }
+.btn.small { min-width: 32px; height: 32px; font-size: 16px; }
+.btn.active { color: var(--ok); border-color: var(--ok); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.position { font: 600 40px/1 ui-monospace, "SF Mono", Consolas, monospace; font-variant-numeric: tabular-nums; margin-bottom: 14px; }
+.sig { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tempo { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+.tempo input {
+  width: 110px; background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 6px;
+  padding: 6px 8px; font: 600 20px ui-monospace, "SF Mono", Consolas, monospace; text-align: right;
+}
+.unit { color: var(--muted); }
+
+.track-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.swatch { width: 14px; height: 14px; border-radius: 3px; background: var(--muted); flex: none; }
+.track-name { font-size: 20px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track-index { margin-left: auto; color: var(--muted); }
+.meter { height: 10px; background: var(--panel-2); border-radius: 5px; overflow: hidden; }
+.meter-fill {
+  height: 100%; width: 100%; transform-origin: left; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--ok) 0 70%, var(--warn) 70% 88%, var(--bad) 88%);
+  transition: transform 60ms linear;
+}
+.volume { display: grid; grid-template-columns: auto 1fr 52px; gap: 10px; align-items: center; margin-top: 16px; color: var(--muted); }
+.volume input { accent-color: var(--accent); width: 100%; }
+.volume output { text-align: right; font-variant-numeric: tabular-nums; color: var(--text); }
+
+.clip-grid { display: grid; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+.clip-grid .col-head {
+  font-size: 12px; color: var(--muted); padding: 4px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  border-bottom: 2px solid transparent; cursor: pointer; background: none; border-top: 0; border-left: 0; border-right: 0; text-align: left;
+}
+.clip-grid .col-head.selected { color: var(--text); border-bottom-color: var(--accent); }
+.clip { height: 30px; min-width: 64px; border-radius: 4px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; color: var(--muted); }
+.clip:hover { border-color: var(--accent); color: var(--text); }
+.clip.flash { animation: flash 400ms ease-out; }
+@keyframes flash { from { background: var(--accent); } }
+
+.log ol { list-style: none; margin: 0; padding: 0; max-height: 220px; overflow-y: auto; font: 12px/1.6 ui-monospace, "SF Mono", Consolas, monospace; }
+.log li { display: grid; grid-template-columns: 76px 1fr auto; gap: 10px; border-bottom: 1px solid var(--line); padding: 3px 0; }
+.log time { color: var(--muted); }
+.log .st { text-align: right; }
+.log .st[data-s="pending"] { color: var(--muted); }
+.log .st[data-s="dispatched"] { color: var(--warn); }
+.log .st[data-s="applied"] { color: var(--ok); }
+.log .st[data-s="failed"], .log .st[data-s="unconfirmed"] { color: var(--bad); }
+
+@media (prefers-reduced-motion: reduce) {
+  .meter-fill, .clip.flash { transition: none; animation: none; }
+}

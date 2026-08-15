@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tether</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffb000' stroke-width='2.5'%3E%3Ccircle cx='6' cy='12' r='3'/%3E%3Ccircle cx='18' cy='12' r='3'/%3E%3Cpath d='M9 12h6'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg>
+      <span>Tether</span>
+    </div>
+    <select id="device" aria-label="Device" hidden></select>
+    <span id="link" class="pill" data-state="offline">offline</span>
+  </header>
+
+  <main id="empty" class="empty">
+    <h1>No device connected</h1>
+    <p>Add <code>Tether.amxd</code> to any track in Live, enter this server's device URL and token, and switch it on.
+      Or run <code>npm run sim</code> for a simulated Set.</p>
+    <form id="token-form" hidden>
+      <label>Server token <input id="token-input" type="password" autocomplete="off" required></label>
+      <button type="submit">Connect</button>
+    </form>
+  </main>
+
+  <main id="app" class="grid" hidden>
+    <section class="card transport">
+      <h2>Transport</h2>
+      <div class="position" id="position">1.1.1</div>
+      <div class="row">
+        <button id="play" class="btn" aria-label="Play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>
+        </button>
+        <button id="stop" class="btn" aria-label="Stop">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg>
+        </button>
+        <span class="sig" id="signature">4/4</span>
+      </div>
+      <form id="tempo-form" class="tempo">
+        <button type="button" class="btn small" data-nudge="-1" aria-label="Tempo down">−</button>
+        <input id="tempo" type="number" min="20" max="999" step="0.01" inputmode="decimal" aria-label="Tempo">
+        <span class="unit">BPM</span>
+        <button type="button" class="btn small" data-nudge="1" aria-label="Tempo up">+</button>
+      </form>
+    </section>
+
+    <section class="card track">
+      <h2>Selected track</h2>
+      <div class="track-head">
+        <span class="swatch" id="track-color"></span>
+        <span class="track-name" id="track-name">—</span>
+        <span class="track-index" id="track-index"></span>
+      </div>
+      <div class="meter" aria-label="Output meter"><div class="meter-fill" id="meter"></div></div>
+      <label class="volume">
+        <span>Volume</span>
+        <input id="volume" type="range" min="0" max="1" step="0.001">
+        <output id="volume-out">—</output>
+      </label>
+    </section>
+
+    <section class="card clips">
+      <h2>Session <small id="set-size"></small></h2>
+      <div class="clip-grid" id="clip-grid" role="grid"></div>
+    </section>
+
+    <section class="card log">
+      <h2>Commands</h2>
+      <ol id="log"></ol>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
