@@ -1,0 +1,32 @@
+{
+  "name": "tether-m4l",
+  "version": "1.0.0",
+  "description": "Max for Live device that bridges an Ableton Live Set to a remote WebSocket server via the Live API and Node for Max.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tools/test.mjs",
+    "bundle": "node tools/bundle.mjs",
+    "build": "node tools/build.mjs",
+    "lint:patcher": "node tools/lint-patcher.mjs device/tether.maxpat",
+    "server": "node server/bin/tether-server.js",
+    "sim": "node server/sim-device.js"
+  },
+  "keywords": [
+    "max-for-live",
+    "ableton-live",
+    "node-for-max",
+    "live-api",
+    "websocket"
+  ],
+  "dependencies": {
+    "ws": "^8.21.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

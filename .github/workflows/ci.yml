@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, windows-latest, ubuntu-latest]
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - name: Report platform
+        run: node -e "console.log(process.platform, process.arch, process.version)"
+      - run: npm test
+        env:
+          REQUIRE_CHROME: '1'
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.node == 22
+        with:
+          name: e2e-screenshots-${{ matrix.os }}
+          path: dist/e2e/
+          if-no-files-found: ignore
+      - name: Build device (fails if Tether/ or device/tether.maxpat is out of date)
+        run: node tools/build.mjs --check
+      - name: Inspect packed device
+        run: node tools/amxd.mjs inspect Tether/Tether.amxd
+      - name: Bundle on Node 16 and 18 (older Max runtimes)
+        if: matrix.node == 22
+        shell: bash
+        run: |
+          for v in 16 18; do
+            bin=$(npm exec -y --package=node@$v -- node -e "console.log(process.execPath)" | tail -1)
+            echo "bundle under $("$bin" --version)"
+            TETHER_NODE_BIN="$bin" node --test test/bundle.test.js test/tls.test.js
+          done
+      - uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        with:
+          name: Tether-device
+          path: |
+            dist/Tether.amxd
+            dist/tether-bridge.js
+            dist/package.json
