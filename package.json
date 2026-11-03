@@ -1,7 +1,7 @@
 {
   "name": "tether-m4l",
-  "version": "1.0.0",
-  "description": "Max for Live device that bridges an Ableton Live Set to a remote WebSocket server via the Live API and Node for Max.",
+  "version": "1.2.0",
+  "description": "Bridge between Ableton Live and a real-time web dashboard for MIDI control and device monitoring",
   "type": "module",
   "private": true,
   "license": "MIT",
@@ -17,16 +17,31 @@
     "sim": "node server/sim-device.js"
   },
   "keywords": [
+    "ableton",
     "max-for-live",
-    "ableton-live",
-    "node-for-max",
-    "live-api",
-    "websocket"
+    "midi",
+    "osc",
+    "bridge",
+    "dashboard"
   ],
   "dependencies": {
     "ws": "^8.21.3"
   },
   "devDependencies": {
     "esbuild": "^0.28.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Provokke/tether-m4l.git"
+  },
+  "author": "Provokke",
+  "files": [
+    "node",
+    "server",
+    "shared",
+    "Tether",
+    "device",
+    "README.md",
+    "LICENSE"
+  ]
 }
